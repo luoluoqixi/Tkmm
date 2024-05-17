@@ -17,7 +17,7 @@
         <StackPanel Grid.ColumnSpan="3"
                     HorizontalAlignment="Right"
                     Orientation="Horizontal">
-            <Button Command="{Binding RefreshCommand}" ToolTip.Tip="Refresh Wiki">
+            <Button Command="{Binding RefreshCommand}" ToolTip.Tip="刷新Wiki">
                 <pi:Icon Value="fa-solid fa-rotate-right" />
             </Button>
         </StackPanel>

@@ -31,10 +31,10 @@ public partial class PackagingPageViewModel : ObservableObject
         content.DataContext = Mod;
 
         ContentDialog dialog = new() {
-            Title = "Contributors",
+            Title = "贡献者",
             Content = content,
             IsSecondaryButtonEnabled = false,
-            PrimaryButtonText = "OK"
+            PrimaryButtonText = "确定"
         };
 
         await dialog.ShowAsync();
@@ -44,7 +44,7 @@ public partial class PackagingPageViewModel : ObservableObject
     [RelayCommand]
     private async Task BrowseExportPath()
     {
-        BrowserDialog dialog = new(BrowserMode.SaveFile, "Export Location", "TKCL Files:*.tkcl");
+        BrowserDialog dialog = new(BrowserMode.SaveFile, "导出位置", "TKCL文件:*.tkcl");
         if (await dialog.ShowDialog() is string result) {
             ExportPath = result;
         }
@@ -53,7 +53,7 @@ public partial class PackagingPageViewModel : ObservableObject
     [RelayCommand]
     private async Task BrowseSourceFolder()
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFolder, "Source Folder");
+        BrowserDialog dialog = new(BrowserMode.OpenFolder, "来源文件夹");
         if (await dialog.ShowDialog() is string result) {
             SourceFolder = result;
         }
@@ -62,7 +62,7 @@ public partial class PackagingPageViewModel : ObservableObject
     [RelayCommand]
     private static async Task BrowseThumbnail(IModItem item)
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFile, "Thumbnail", "Image Files:*.bmp;*.gif;*.jpg;*.jpeg;*.png;*.tif");
+        BrowserDialog dialog = new(BrowserMode.OpenFile, "缩略图", "图片文件:*.bmp;*.gif;*.jpg;*.jpeg;*.png;*.tif");
         if (await dialog.ShowDialog() is string result) {
             item.ThumbnailUri = result;
         }
@@ -72,7 +72,7 @@ public partial class PackagingPageViewModel : ObservableObject
     private async Task Create()
     {
         if (string.IsNullOrEmpty(SourceFolder)) {
-            App.Toast("Packaging requires a mod to package. Please provide a mod folder.");
+            App.Toast("打包需要一个模组文件夹，请提供一个模组文件夹");
             return;
         }
 
@@ -105,7 +105,7 @@ public partial class PackagingPageViewModel : ObservableObject
     [RelayCommand]
     private async Task ImportInfo()
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFile, "Import Mod Info", "Mods:info.json;*.tkcl|JSON Metadata:info.json|Mod Archive:*.tkcl");
+        BrowserDialog dialog = new(BrowserMode.OpenFile, "导入模组信息", "模组文件:info.json;*.tkcl|JSON 元数据文件:info.json|Mod Archive:*.tkcl");
         if (await dialog.ShowDialog() is string result) {
             Stream? stream;
             if (result.EndsWith("info.json")) {
@@ -117,13 +117,13 @@ public partial class PackagingPageViewModel : ObservableObject
             }
 
             if (stream is null) {
-                AppStatus.Set("Could not read mod metadata!", "fa-solid fa-triangle-exclamation", temporaryStatusTime: 1.5, isWorkingStatus: false);
+                AppStatus.Set("无法读取模组元数据!", "fa-solid fa-triangle-exclamation", temporaryStatusTime: 1.5, isWorkingStatus: false);
                 return;
             }
 
             Mod = JsonSerializer.Deserialize<Mod>(stream)
                 ?? throw new InvalidOperationException("""
-                    Error parsing metadata: The JSON deserializer returned null.
+                    解析元数据错误: JSON反序列化返回null
                     """);
 
             await stream.DisposeAsync();
@@ -133,10 +133,10 @@ public partial class PackagingPageViewModel : ObservableObject
     [RelayCommand]
     private async Task ExportMetadata()
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFolder, "Export Mod Metadata");
+        BrowserDialog dialog = new(BrowserMode.OpenFolder, "导出模组元数据");
         if (await dialog.ShowDialog() is string result) {
             PackageBuilder.CreateMetaData(Mod, result);
-            AppStatus.Set("Exported metadata!", "fa-solid fa-circle-check", temporaryStatusTime: 1.5, isWorkingStatus: false);
+            AppStatus.Set("导出元数据完成!", "fa-solid fa-circle-check", temporaryStatusTime: 1.5, isWorkingStatus: false);
         }
     }
 
@@ -145,7 +145,7 @@ public partial class PackagingPageViewModel : ObservableObject
     {
         if (!string.IsNullOrEmpty(SourceFolder) && Directory.Exists(SourceFolder)) {
             PackageBuilder.CreateMetaData(Mod, SourceFolder, useSourceFolderName: true);
-            AppStatus.Set("Exported metadata!", "fa-solid fa-circle-check", temporaryStatusTime: 1.5, isWorkingStatus: false);
+            AppStatus.Set("导出元数据完成!", "fa-solid fa-circle-check", temporaryStatusTime: 1.5, isWorkingStatus: false);
         }
 
         return Task.CompletedTask;
@@ -163,7 +163,7 @@ public partial class PackagingPageViewModel : ObservableObject
     [RelayCommand]
     private async Task ImportOptionGroup()
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFolder, "Import Mod Option Group");
+        BrowserDialog dialog = new(BrowserMode.OpenFolder, "导入模组选项组");
         if (await dialog.ShowDialog() is string result) {
             string output = Path.Combine(SourceFolder, PackageBuilder.OPTIONS, Path.GetFileName(result));
             DirectoryOperations.CopyDirectory(result, output);
@@ -174,7 +174,7 @@ public partial class PackagingPageViewModel : ObservableObject
     [RelayCommand]
     private static async Task ImportOption(ModOptionGroup group)
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFolder, "Import Mod Option");
+        BrowserDialog dialog = new(BrowserMode.OpenFolder, "导入模组选项");
         if (await dialog.ShowDialog() is string result) {
             string output = Path.Combine(group.SourceFolder, Path.GetFileName(result));
             DirectoryOperations.CopyDirectory(result, output);
@@ -213,14 +213,14 @@ public partial class PackagingPageViewModel : ObservableObject
     private static async Task<bool> WarnRemove(IModItem target)
     {
         ContentDialog dialog = new() {
-            Title = "Warning",
+            Title = "警告",
             Content = $"""
-            This action will delete the source folder in '{target.SourceFolder}' and cannot be undone.
+            此操作将永久删除文件夹 '{target.SourceFolder}' 并且无法撤销
 
-            Are you sure you would like to delete '{target.Name}'?
+            您确定要删除 '{target.Name}' 吗?
             """,
-            PrimaryButtonText = "Delete Permanently",
-            SecondaryButtonText = "Cancel"
+            PrimaryButtonText = "永久删除",
+            SecondaryButtonText = "取消"
         };
 
         return await dialog.ShowAsync() == ContentDialogResult.Primary;

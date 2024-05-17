@@ -34,13 +34,13 @@
                                 <TextBox Grid.Column="1"
                                          Margin="5,0,0,0"
                                          Text="{Binding Name}"
-                                         ToolTip.Tip="Contributor Name"
-                                         Watermark="Contributor Name" />
+                                         ToolTip.Tip="贡献者名字"
+                                         Watermark="贡献者名字" />
                                 <TextBox Grid.Column="2"
                                          Margin="5,0,0,0"
                                          Text="{Binding Contributions, Converter={x:Static converters:SemicolonDelimitedListConverter.Shared}}"
-                                         ToolTip.Tip="Semicolon delimited list of contributions"
-                                         Watermark="Semicolon delimited list of contributions" />
+                                         ToolTip.Tip="以英文分号分割的贡献者列表"
+                                         Watermark="以英文分号分割的贡献者列表" />
                             </Grid>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -65,7 +65,7 @@
                    FontFamily="{StaticResource HyliaGlyph}"
                    FontSize="30"
                    Foreground="{DynamicResource SystemAccentColor}"
-                   Text="TKCL Packager" />
+                   Text="TKCL 打包" />
 
         <ScrollViewer Grid.Row="1">
             <StackPanel Margin="0,0,18,0" Spacing="5">
@@ -76,41 +76,41 @@
                            ToolTip.Tip="{Binding Mod.Id}" />
 
                 <Grid ColumnDefinitions="*,Auto">
-                    <TextBox Text="{Binding SourceFolder}" Watermark="Folder" />
+                    <TextBox Text="{Binding SourceFolder}" Watermark="文件夹" />
                     <Button Grid.Column="1"
                             Margin="5,0,0,0"
                             Command="{Binding BrowseSourceFolderCommand}"
-                            Content="Browse..." />
+                            Content="浏览..." />
                 </Grid>
 
-                <TextBox Text="{Binding Mod.Name}" Watermark="Name" />
-                <TextBox Text="{Binding Mod.Version}" Watermark="Version" />
+                <TextBox Text="{Binding Mod.Name}" Watermark="名称" />
+                <TextBox Text="{Binding Mod.Version}" Watermark="版本" />
 
                 <Grid ColumnDefinitions="*,Auto">
-                    <TextBox Text="{Binding Mod.Author}" Watermark="Author" />
+                    <TextBox Text="{Binding Mod.Author}" Watermark="作者" />
                     <Button Grid.Column="1"
                             Margin="5,0,0,0"
                             Command="{Binding EditContributorsCommand}"
                             CommandParameter="{StaticResource ContributorsEditor}"
                             Content="..."
-                            ToolTip.Tip="Edit Contributors" />
+                            ToolTip.Tip="编辑贡献者" />
                 </Grid>
 
                 <Grid ColumnDefinitions="*,Auto">
-                    <TextBox Text="{Binding Mod.ThumbnailUri}" Watermark="Thumbnail" />
+                    <TextBox Text="{Binding Mod.ThumbnailUri}" Watermark="缩略图" />
                     <Button Grid.Column="1"
                             Margin="5,0,0,0"
                             Command="{Binding BrowseThumbnailCommand}"
                             CommandParameter="{Binding Mod}"
-                            Content="Browse..." />
+                            Content="浏览..." />
                 </Grid>
 
                 <Grid ColumnDefinitions="*,Auto">
-                    <TextBox Text="{Binding ExportPath}" Watermark="Output Path" />
+                    <TextBox Text="{Binding ExportPath}" Watermark="输出路径" />
                     <Button Grid.Column="1"
                             Margin="5,0,0,0"
                             Command="{Binding BrowseExportPathCommand}"
-                            Content="Browse..." />
+                            Content="浏览..." />
                 </Grid>
 
                 <Border Height="1"
@@ -122,13 +122,13 @@
                             Spacing="5">
                     <Button Padding="5,3"
                             Command="{Binding ImportOptionGroupCommand}"
-                            Content="Import Option Group"
+                            Content="导入选项组"
                             FontSize="12" />
                     <Button Padding="5,3"
                             Command="{Binding RefreshCommand}"
-                            Content="Refresh"
+                            Content="刷新"
                             FontSize="12"
-                            ToolTip.Tip="Reload the source folder and all configurations" />
+                            ToolTip.Tip="重新加载源文件夹和所有配置" />
                 </StackPanel>
 
 
@@ -144,7 +144,7 @@
                                                 x:CompileBindings="False"
                                                 Command="{Binding $parent[UserControl].DataContext.RemoveOptionGroupCommand}"
                                                 CommandParameter="{Binding}"
-                                                ToolTip.Tip="Remove">
+                                                ToolTip.Tip="移除">
                                             <pi:Icon Width="16"
                                                      Height="16"
                                                      Value="fa-solid fa-trash" />
@@ -190,7 +190,7 @@
                                                                     x:CompileBindings="False"
                                                                     Command="{Binding $parent[UserControl].DataContext.RemoveOptionCommand}"
                                                                     CommandParameter="{Binding}"
-                                                                    ToolTip.Tip="Remove">
+                                                                    ToolTip.Tip="移除">
                                                                 <pi:Icon Width="16"
                                                                          Height="16"
                                                                          Value="fa-solid fa-trash" />
@@ -220,16 +220,16 @@
               Grid.Column="1"
               Margin="5,-13,0,0">
             <TabControl Padding="0,10,0,0">
-                <TabItem Header="Edit">
+                <TabItem Header="编辑">
                     <TextBox AcceptsReturn="True"
                              AcceptsTab="True"
                              Text="{Binding Mod.Description}"
-                             Watermark="Description (accepts markdown)" />
+                             Watermark="描述 (允许Markdown)" />
                 </TabItem>
-                <TabItem Header="Preview">
+                <TabItem Header="预览">
                     <md:MarkdownScrollViewer Markdown="{Binding Mod.Description}" />
                 </TabItem>
-                <TabItem Header="Thumbnail">
+                <TabItem Header="缩略图">
                     <Image Source="{Binding Mod.Thumbnail}" />
                 </TabItem>
             </TabControl>
@@ -240,12 +240,12 @@
                     Orientation="Horizontal">
             <Button BorderBrush="{DynamicResource SystemAccentColor}"
                     Command="{Binding CreateCommand}"
-                    ToolTip.Tip="Create TKCL">
+                    ToolTip.Tip="创建TKCL模组文件">
                 <StackPanel Orientation="Horizontal">
                     <pi:Icon Value="fa-solid fa-boxes-packing" />
                     <TextBlock Margin="10,0,0,0"
                                VerticalAlignment="Center"
-                               Text="Create Package" />
+                               Text="创建模组" />
                 </StackPanel>
             </Button>
             <Button Width="30"
@@ -253,7 +253,7 @@
                     Margin="15,0,0,0"
                     Padding="0"
                     Command="{Binding ImportInfoCommand}"
-                    ToolTip.Tip="Imports mod info from an info.json or tkcl file">
+                    ToolTip.Tip="从 info.json 或 TKCL 文件 导入模组">
                 <pi:Icon Value="fa-solid fa-file-import" />
             </Button>
             <Button Width="30"
@@ -261,7 +261,7 @@
                     Margin="15,0,0,0"
                     Padding="0"
                     Command="{Binding ExportMetadataCommand}"
-                    ToolTip.Tip="Exports the metadata to a mod folder">
+                    ToolTip.Tip="导出元数据到模组文件夹">
                 <pi:Icon Value="fa-regular fa-folder-open" />
             </Button>
             <Button Width="30"
@@ -269,7 +269,7 @@
                     Margin="15,0,0,0"
                     Padding="0"
                     Command="{Binding WriteMetadataCommand}"
-                    ToolTip.Tip="Write the metadata to the input mod folder">
+                    ToolTip.Tip="将元数据写入模组文件夹">
                 <pi:Icon Value="fa-regular fa-floppy-disk" />
             </Button>
         </StackPanel>

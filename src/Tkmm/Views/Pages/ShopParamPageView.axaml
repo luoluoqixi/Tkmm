@@ -27,9 +27,9 @@
                                FontStyle="Italic"
                                TextTrimming="CharacterEllipsis">
                         <Run FontWeight="Medium" Text="{Binding CurrentShop.NPCName}" />
-                        <Run Text="in" />
+                        <Run Text="在" />
                         <Run FontWeight="Medium" Text="{Binding CurrentShop.Location}" />
-                        <Run Text="after completing" />
+                        <Run Text="完成之后" />
                         <Run FontWeight="Medium" Text="{Binding CurrentShop.RequiredQuest}" />
                     </TextBlock>
                 </Grid>
@@ -96,12 +96,12 @@
             <StackPanel Orientation="Horizontal" Spacing="5">
                 <Button Command="{Binding ResetMapCommand}"
                         CommandParameter="{Binding #ZoomBorder}"
-                        ToolTip.Tip="Reset map position">
+                        ToolTip.Tip="重置地图位置">
                     <pi:Icon Value="fa-solid fa-arrow-rotate-right" />
                 </Button>
                 <Button Command="{Binding GotoSelectedCommand}"
                         CommandParameter="{Binding #ZoomBorder}"
-                        ToolTip.Tip="Focus selected shop">
+                        ToolTip.Tip="聚焦选择的商店">
                     <pi:Icon Value="fa-solid fa-location-crosshairs" />
                 </Button>
             </StackPanel>

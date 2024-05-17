@@ -55,7 +55,7 @@
                                        Padding="15"
                                        FontStyle="Italic"
                                        Foreground="{DynamicResource SystemChromeHighColor}"
-                                       Text="Drag and Drop a mod folder or TKCL file to import"
+                                       Text="拖拽要导入的模组文件夹或TKCL文件"
                                        TextAlignment="Center" />
                         </StackPanel>
                     </Border>
@@ -86,17 +86,17 @@
                         <TextBlock VerticalAlignment="Center"
                                    FontSize="14"
                                    IsVisible="{Binding Current.Mod.Contributors.Count}"
-                                   Text=" and " />
+                                   Text=" 和 " />
                         <ui:HyperlinkButton Padding="1"
                                             Command="{Binding ShowContributorsCommand}"
-                                            Content="Contributors"
+                                            Content="贡献者"
                                             FontSize="12"
                                             IsVisible="{Binding Current.Mod.Contributors.Count}" />
                     </StackPanel>
                     <ToggleButton Grid.RowSpan="2"
                                   Padding="8,4"
                                   HorizontalAlignment="Right"
-                                  Content="Show/Hide Options"
+                                  Content="显示/隐藏 选项"
                                   FontWeight="Medium"
                                   IsChecked="{Binding ShowOptions}"
                                   IsVisible="{Binding Current.Mod.OptionGroups.Count}" />
@@ -196,7 +196,7 @@
                          DragDrop.AllowDrop="True"
                          ItemsSource="{Binding Current.Mods, Source={x:Static comp:ProfileManager.Shared}}"
                          SelectedItem="{Binding Current}"
-                         ToolTip.Tip="Mods">
+                         ToolTip.Tip="模组列表">
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type comp-models:ProfileMod}">
                             <Grid Background="Transparent" ColumnDefinitions="*,Auto">
@@ -221,7 +221,7 @@
                     <Button Margin="2.5"
                             VerticalAlignment="Stretch"
                             Command="{Binding RemoveCommand}"
-                            ToolTip.Tip="Remove Mod">
+                            ToolTip.Tip="移除模组">
                         <pi:Icon Value="fa-solid fa-trash" />
                     </Button>
                     <Button Margin="2.5"
@@ -237,13 +237,13 @@
                     <Button Margin="2.5" Command="{Binding MergeCommand}">
                         <StackPanel Orientation="Horizontal">
                             <pi:Icon Value="fa-solid fa-list-check" />
-                            <TextBlock Margin="10,0,0,0" Text="Merge" />
+                            <TextBlock Margin="10,0,0,0" Text="合并" />
                         </StackPanel>
                     </Button>
                     <Button Margin="2.5" Command="{Binding InstallCommand}">
                         <StackPanel Orientation="Horizontal">
                             <pi:Icon Value="fa-solid fa-file-import" />
-                            <TextBlock Margin="10,0,0,0" Text="Install" />
+                            <TextBlock Margin="10,0,0,0" Text="安装" />
                         </StackPanel>
                     </Button>
                 </WrapPanel>

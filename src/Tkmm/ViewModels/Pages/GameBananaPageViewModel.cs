@@ -110,7 +110,7 @@ public partial class GameBananaPageViewModel : ObservableObject
         });
 
         panel.Children.Add(new TextBlock {
-            Text = "Choose a file to install:",
+            Text = "选择要安装的文件:",
             FontSize = 11,
             Margin = new(15, 10, 0, 0),
             TextWrapping = Avalonia.Media.TextWrapping.Wrap
@@ -131,15 +131,15 @@ public partial class GameBananaPageViewModel : ObservableObject
         }
 
         ContentDialog dialog = new() {
-            Title = $"Install {mod.Name}?",
+            Title = $"安装 {mod.Name}?",
             Content = panel,
-            SecondaryButtonText = "No",
-            PrimaryButtonText = "Yes"
+            SecondaryButtonText = "否",
+            PrimaryButtonText = "是"
         };
 
         if (await dialog.ShowAsync() == ContentDialogResult.Primary) {
             if (panel.Children.FirstOrDefault(x => x is RadioButton radioButton && radioButton.IsChecked == true)?.Tag is GameBananaFile file) {
-                AppStatus.Set($"Downloading '{file.Name}'", "fa-solid fa-download", isWorkingStatus: true);
+                AppStatus.Set($"正在下载 '{file.Name}'", "fa-solid fa-download", isWorkingStatus: true);
 
                 try {
                     await Task.Run(async () => {
@@ -148,11 +148,11 @@ public partial class GameBananaPageViewModel : ObservableObject
                         ProfileManager.Shared.Current.Mods.Add(result);
                     });
 
-                    AppStatus.Set("Install Complete!", "fa-regular fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
+                    AppStatus.Set("安装完成!", "fa-regular fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
                 }
                 catch (Exception ex) {
                     App.ToastError(ex);
-                    AppStatus.Set("Install Failed!", "fa-regular fa-circle-xmark", isWorkingStatus: false, temporaryStatusTime: 1.5);
+                    AppStatus.Set("安装失败!", "fa-regular fa-circle-xmark", isWorkingStatus: false, temporaryStatusTime: 1.5);
                 }
             }
         }

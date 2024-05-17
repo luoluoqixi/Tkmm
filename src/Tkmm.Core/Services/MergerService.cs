@@ -27,7 +27,7 @@ public class MergerService
             .ToArray();
 
         if (mods.Length <= 0) {
-            AppStatus.Set("Nothing to Merge", "fa-solid fa-code-merge",
+            AppStatus.Set("没有什么要合并的", "fa-solid fa-code-merge",
                 isWorkingStatus: false, temporaryStatusTime: 1.5,
                 logLevel: LogLevel.Info);
 
@@ -35,7 +35,7 @@ public class MergerService
         }
 
         if (Directory.Exists(output)) {
-            AppStatus.Set($"Clearing output", "fa-solid fa-code-merge");
+            AppStatus.Set($"清除输出", "fa-solid fa-code-merge");
             Directory.Delete(output, true);
         }
 
@@ -46,7 +46,7 @@ public class MergerService
         });
 
         TriviaService.Stop();
-        AppStatus.Set("Merge completed successfully", "fa-solid fa-list-check",
+        AppStatus.Set("合并成功完成", "fa-solid fa-list-check",
             isWorkingStatus: false, temporaryStatusTime: 1.5,
             logLevel: LogLevel.Info);
     }

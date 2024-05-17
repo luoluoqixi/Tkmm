@@ -59,15 +59,15 @@ public partial class ProfilesPageViewModel : ObservableObject
 
         ContentDialog dialog = new() {
             Content = $"""
-            Are you sure you would like to uninstall '{target.Name}'?
+            您确定要卸载 '{target.Name}' 吗?
 
-            This cannot be undone.
+            这是无法挽回的
             """,
             IsPrimaryButtonEnabled = true,
             IsSecondaryButtonEnabled = true,
-            PrimaryButtonText = "Uninstall Mod",
-            SecondaryButtonText = "Cancel",
-            Title = "Warning"
+            PrimaryButtonText = "卸载模组",
+            SecondaryButtonText = "取消",
+            Title = "警告"
         };
 
         if (await dialog.ShowAsync() == ContentDialogResult.Primary) {
@@ -79,19 +79,19 @@ public partial class ProfilesPageViewModel : ObservableObject
     private static async Task DeleteCurrentProfile()
     {
         if (ProfileManager.Shared.Profiles.Count < 2) {
-            App.Toast("Cannot delete the last profile!", "Error", NotificationType.Error);
+            App.Toast("不能删除最后一个配置文件!", "错误", NotificationType.Error);
             return;
         }
 
         ContentDialog dialog = new() {
-            Title = "Delete Profile",
+            Title = "删除配置文件",
             Content = $"""
-            Are you sure you would like to delete the profile '{ProfileManager.Shared.Current.Name}'?
+            您确定要删除配置文件 '{ProfileManager.Shared.Current.Name}' 吗?
 
-            This cannot be undone.
+            这是无法挽回的
             """,
-            PrimaryButtonText = "Delete",
-            SecondaryButtonText = "Cancel",
+            PrimaryButtonText = "删除",
+            SecondaryButtonText = "取消",
         };
 
         if (await dialog.ShowAsync() != ContentDialogResult.Primary) {

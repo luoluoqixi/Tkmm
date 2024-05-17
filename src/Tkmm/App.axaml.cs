@@ -31,7 +31,7 @@ public partial class App : Application
     private static WindowNotificationManager? _notificationManager;
 
     public static string? Version { get; } = Assembly.GetExecutingAssembly().GetName().Version?.ToString(3);
-    public static string Title { get; } = $"TotK Mod Manager";
+    public static string Title { get; } = $"王国之泪模组管理器";
     public static string ShortTitle { get; } = $"TKMM v{Version}";
     public static string ReleaseUrl { get; } = $"https://github.com/TKMM-Team/Tkmm/releases/{Version}";
     public static TopLevel? XamlRoot { get; private set; }
@@ -104,26 +104,29 @@ public partial class App : Application
                 isValid = isValid && ConfigModule<TotkConfig>.Shared.Validate(out message, out target);
                 settingsModel.Append<TotkConfig>();
 
+                settingsModel.PrimaryButtonContent = "保存";
+                settingsModel.SecondaryButtonContent = "取消";
+
                 if (!isValid && target?.Attribute is not null) {
                     settingsModel.SelectedGroup = settingsModel.Categories
                         .Where(x => x.Header == target.Attribute.Category)
                         .SelectMany(x => x.Groups)
                         .FirstOrDefault(x => x.Header == target.Attribute.Group);
 
-                    AppStatus.Set($"Invalid setting, {target.Property.Name} is invalid.",
+                    AppStatus.Set($"无效的设置, {target.Property.Name} 是无效的.",
                         "fa-solid fa-triangle-exclamation", isWorkingStatus: false);
                 }
             }
 
-            PageManager.Shared.Register(Page.Home, "Home", new HomePageView(), Symbol.Home, "Home", isDefault: true);
-            PageManager.Shared.Register(Page.Profiles, "Profiles", new ProfilesPageView(), Symbol.OtherUser, "Manage mod profiles");
-            PageManager.Shared.Register(Page.Tools, "TKCL Packager", new PackagingPageView(), Symbol.CodeHTML, "Mod developer tools");
-            PageManager.Shared.Register(Page.ShopParam, "ShopParam Overflow Editor", new ShopParamPageView(), Symbol.Sort, "ShopParam overflow ordering tools");
-            PageManager.Shared.Register(Page.Mods, "GameBanana Mod Browser", new GameBananaPageView(), Symbol.Globe, "GameBanana browser client for TotK mods");
+            PageManager.Shared.Register(Page.Home, "主页", new HomePageView(), Symbol.Home, "主页", isDefault: true);
+            PageManager.Shared.Register(Page.Profiles, "配置文件", new ProfilesPageView(), Symbol.OtherUser, "管理模组配置文件");
+            PageManager.Shared.Register(Page.Tools, "TKCL打包", new PackagingPageView(), Symbol.CodeHTML, "模组开发工具");
+            PageManager.Shared.Register(Page.ShopParam, "ShopParam Overflow 编辑器", new ShopParamPageView(), Symbol.Sort, "ShopParam overflow 订购工具");
+            PageManager.Shared.Register(Page.Mods, "模组浏览器(GameBanana)", new GameBananaPageView(), Symbol.Globe, "王国之泪模组的浏览器客户端(GameBanana)");
 
-            PageManager.Shared.Register(Page.About, "About", new AboutPageView(), Symbol.Bookmark, "About The Project", isFooter: true);
-            PageManager.Shared.Register(Page.Logs, "Logs", new LogsPageView(), Symbol.AllApps, "System Logs", isFooter: true);
-            PageManager.Shared.Register(Page.Settings, "Settings", settingsPage, Symbol.Settings, "Settings", isFooter: true, isDefault: isValid == false);
+            PageManager.Shared.Register(Page.About, "关于", new AboutPageView(), Symbol.Bookmark, "关于这个项目", isFooter: true);
+            PageManager.Shared.Register(Page.Logs, "日志", new LogsPageView(), Symbol.AllApps, "系统日志", isFooter: true);
+            PageManager.Shared.Register(Page.Settings, "设置", settingsPage, Symbol.Settings, "设置", isFooter: true, isDefault: isValid == false);
 
             Config.SetTheme(Config.Shared.Theme);
 
@@ -141,7 +144,7 @@ public partial class App : Application
         }
     }
 
-    public static void Toast(string message, string title = "Notice", NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Action? action = null)
+    public static void Toast(string message, string title = "通知", NotificationType type = NotificationType.Information, TimeSpan? expiration = null, Action? action = null)
     {
         Dispatcher.UIThread.Invoke(() => {
             _notificationManager?.Show(

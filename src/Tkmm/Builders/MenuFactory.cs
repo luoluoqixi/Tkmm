@@ -115,7 +115,7 @@ public class MenuFactory(TopLevel? topLevel) : IMenuFactory
                 }
             }
             catch (Exception ex) {
-                AppStatus.Set($"Failed to execute action: {attribute.Name}", "fa-regular fa-circle-xmark", isWorkingStatus: false, temporaryStatusTime: 3, LogLevel.Error);
+                AppStatus.Set($"执行操作失败: {attribute.Name}", "fa-regular fa-circle-xmark", isWorkingStatus: false, temporaryStatusTime: 3, LogLevel.Error);
                 Trace.WriteLine($"[{LogLevel.Error}] {ex} - {ex.Message}");
             }
         });

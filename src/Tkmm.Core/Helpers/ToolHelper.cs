@@ -30,7 +30,7 @@ public class ToolHelper
             using FileStream fs = File.OpenRead(_depsPath);
             Deps = JsonSerializer.Deserialize<Dictionary<Tool, Dependency>>(fs)
                 ?? throw new InvalidOperationException("""
-                    Could not parse deps, the JsonDeserializer returned null
+                    无法解析deps，json反序列化返回null
                     """);
 
             goto FillExclude;
@@ -39,7 +39,7 @@ public class ToolHelper
         byte[] data = await GitHubOperations.GetAsset("TKMM-Team", ".github", "deps.json");
         Deps = JsonSerializer.Deserialize<Dictionary<Tool, Dependency>>(data)
             ?? throw new InvalidOperationException("""
-                Could not parse deps, the JsonDeserializer returned null
+                无法解析deps，json反序列化返回null
                 """);
 
         using (FileStream writer = File.Create(_depsPath)) {
@@ -66,7 +66,7 @@ public class ToolHelper
     {
         if (!Deps.TryGetValue(tool, out var dependency)) {
             throw new KeyNotFoundException($"""
-                The tool {tool} could not be found!
+                找不到工具 {tool}
                 """);
         }
 
@@ -93,7 +93,7 @@ public class ToolHelper
 
     public static async Task DownloadDependencies(Action<double>? updateProgress = null, bool forceRefresh = false)
     {
-        AppStatus.Set("Downloading dependencies", "fa-solid fa-download", isWorkingStatus: true);
+        AppStatus.Set("正在下载依赖", "fa-solid fa-download", isWorkingStatus: true);
 
         if (Deps.Count <= 0 || forceRefresh) {
             await LoadDeps(forceRefresh);
@@ -106,13 +106,13 @@ public class ToolHelper
         Directory.CreateDirectory(_appsDir);
         foreach ((_, var dep) in Deps) {
             tasks.Add(Task.Run(async () => {
-                AppStatus.Set($"Downloading '{dep.Owner}/{dep.Repo}'", "fa-solid fa-download", isWorkingStatus: true);
+                AppStatus.Set($"正在下载 '{dep.Owner}/{dep.Repo}'", "fa-solid fa-download", isWorkingStatus: true);
                 await dep.Download();
                 updateProgress?.Invoke(inc);
             }));
         }
 
         await Task.WhenAll(tasks);
-        AppStatus.Set("Dependencies restored!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
+        AppStatus.Set("依赖关系还原!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
     }
 }

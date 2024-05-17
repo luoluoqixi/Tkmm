@@ -25,7 +25,7 @@
                      VerticalAlignment="Center"
                      KeyDown="TextBox_KeyDown"
                      Text="{Binding SearchArgument}"
-                     Watermark="Search (must be more than 2 characters)" />
+                     Watermark="搜索(必须大于2个字符)" />
 
             <Button Grid.Column="1"
                     Width="30"
@@ -55,7 +55,7 @@
                           CommandParameter="{Binding #ModsViewer}"
                           IsChecked="{Binding IsShowingSuggested}">
                 <StackPanel Margin="7,0" Orientation="Horizontal">
-                    <TextBlock Margin="0,0,7,0" Text="Suggested Mods" />
+                    <TextBlock Margin="0,0,7,0" Text="推荐的模组" />
                     <pi:Icon Value="fa-solid fa-gift" />
                 </StackPanel>
             </ToggleButton>

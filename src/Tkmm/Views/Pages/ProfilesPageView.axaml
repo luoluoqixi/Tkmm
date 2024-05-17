@@ -40,7 +40,7 @@
                         Margin="10,0,0,0"
                         Padding="0"
                         Command="{Binding CreateNewCommand, Source={x:Static comp:ProfileManager.Shared}}"
-                        ToolTip.Tip="Create a new profile">
+                        ToolTip.Tip="创建一个新配置">
                     <pi:Icon Value="fa-solid fa-plus" />
                 </Button>
 
@@ -50,7 +50,7 @@
                         Margin="10,0,0,0"
                         Padding="0"
                         Command="{Binding DeleteCurrentProfileCommand}"
-                        ToolTip.Tip="Delete the selected profile">
+                        ToolTip.Tip="删除当前选择配置">
                     <pi:Icon Value="fa-solid fa-trash" />
                 </Button>
             </Grid>
@@ -92,7 +92,7 @@
                         <Button Margin="2.5"
                                 VerticalAlignment="Stretch"
                                 Command="{Binding RemoveCommand}"
-                                ToolTip.Tip="Remove Mod">
+                                ToolTip.Tip="移除模组">
                             <pi:Icon Value="fa-solid fa-trash" />
                         </Button>
                         <Button Margin="2.5"

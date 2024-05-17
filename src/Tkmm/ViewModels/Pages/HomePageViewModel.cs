@@ -33,7 +33,7 @@ public partial class HomePageViewModel : ObservableObject
     private async Task ShowContributors()
     {
         ContentDialog dialog = new() {
-            Title = "Contributors",
+            Title = "贡献者",
             Content = new TextBlock {
                 Text = $"""
                 {string.Join("\n", Current?.Mod?.Contributors
@@ -42,7 +42,7 @@ public partial class HomePageViewModel : ObservableObject
                 TextWrapping = TextWrapping.WrapWithOverflow
             },
             IsPrimaryButtonEnabled = true,
-            PrimaryButtonText = "Dismiss"
+            PrimaryButtonText = "解雇"
         };
 
         await dialog.ShowAsync();

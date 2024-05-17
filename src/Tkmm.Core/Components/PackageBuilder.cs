@@ -21,7 +21,7 @@ public class PackageBuilder
 
     public static void CreateMetaData<T>(T item, string outputFolder, bool useSourceFolderName = false) where T : IModItem
     {
-        AppStatus.Set($"Creating metadata for '{item.Name}'", METADATA_ICON);
+        AppStatus.Set($"正在从 '{item.Name}' 创建元数据", METADATA_ICON);
         Directory.CreateDirectory(outputFolder);
 
         string metadataFile = Path.Combine(outputFolder, METADATA);
@@ -29,7 +29,7 @@ public class PackageBuilder
         JsonSerializer.Serialize(fs, item);
 
         if (File.Exists(item.ThumbnailUri)) {
-            AppStatus.Set($"Copying thumbnail", METADATA_ICON);
+            AppStatus.Set($"正在拷贝缩略图", METADATA_ICON);
             File.Copy(item.ThumbnailUri, Path.Combine(outputFolder, THUMBNAIL), true);
             item.ThumbnailUri = THUMBNAIL;
         }
@@ -49,19 +49,19 @@ public class PackageBuilder
                 }
             }
 
-            AppStatus.Set($"Metadata generated for mod '{item.Name}'", CHECK_ICON, isWorkingStatus: false, temporaryStatusTime: 1.5);
+            AppStatus.Set($"生成模组元数据 '{item.Name}'", CHECK_ICON, isWorkingStatus: false, temporaryStatusTime: 1.5);
         }
     }
 
     public static async Task CopyContents<T>(T item, string sourceFolder, string outputFolder) where T : IModItem
     {
         await Task.WhenAll(CopyContentsInternal(item, sourceFolder, outputFolder));
-        AppStatus.Set($"Packaged '{item.Name}'", CHECK_ICON, isWorkingStatus: false, temporaryStatusTime: 1.5);
+        AppStatus.Set($"打包 '{item.Name}'", CHECK_ICON, isWorkingStatus: false, temporaryStatusTime: 1.5);
     }
 
     private static List<Task> CopyContentsInternal<T>(T item, string sourceFolder, string outputFolder) where T : IModItem
     {
-        AppStatus.Set($"Generating changelogs for '{item.Name}'", COPY_ICON);
+        AppStatus.Set($"从 '{item.Name}' 生成changelogs", COPY_ICON);
 
         List<Task> tasks = [
 
@@ -105,7 +105,7 @@ public class PackageBuilder
         ];
 
         if (item is Mod mod) {
-            AppStatus.Set("Copying options", COPY_ICON);
+            AppStatus.Set("正在拷贝选项", COPY_ICON);
 
             foreach (var group in mod.OptionGroups) {
                 string groupOutputFolder = Path.Combine(outputFolder, OPTIONS, group.Id.ToString());

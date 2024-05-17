@@ -14,13 +14,13 @@ public class AssetHelper
         byte[] data = await GitHubOperations.GetAsset("TKMM-Team", ".github", "assets.json");
         return JsonSerializer.Deserialize<List<GithubAsset>>(data)
             ?? throw new InvalidOperationException("""
-                Could not parse assets, the JsonDeserializer returned null
+                无法解析资产，JSON反序列化返回null
                 """);
     }
 
     public static async Task Download()
     {
-        AppStatus.Set("Downloading assets", "fa-solid fa-download");
+        AppStatus.Set("正在下载资产", "fa-solid fa-download");
 
         List<Task> tasks = [];
 
@@ -29,6 +29,6 @@ public class AssetHelper
         }
 
         await Task.WhenAll(tasks);
-        AppStatus.Set("Assets restored!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
+        AppStatus.Set("资产恢复!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
     }
 }

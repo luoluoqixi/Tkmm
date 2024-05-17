@@ -19,7 +19,7 @@ namespace Tkmm.Builders.MenuModels;
 
 public class ShellViewMenu
 {
-    [Menu("Export to SD Card", "File", "Ctrl + E", "fa-solid fa-sd-card")]
+    [Menu("导出到SD卡", "文件", "Ctrl + E", "fa-solid fa-sd-card")]
     public static async Task ExportToSdCard()
     {
         const string GAME_ID = "0100F2C0115B6000";
@@ -37,21 +37,21 @@ public class ShellViewMenu
 
         if (disks.Length == 0) {
             App.ToastError(new InvalidOperationException("""
-                No removable disks found!
+                没有找到可移动磁盘!
                 """));
 
             return;
         }
 
         ContentDialog dialog = new() {
-            Title = "Select SD Card",
+            Title = "选择SD卡",
             Content = new ComboBox {
                 ItemsSource = disks,
                 SelectedIndex = 0,
                 DisplayMemberBinding = new Binding("VolumeLabel")
             },
-            PrimaryButtonText = "Export",
-            SecondaryButtonText = "Cancel"
+            PrimaryButtonText = "导出",
+            SecondaryButtonText = "取消"
         };
 
         if (await dialog.ShowAsync() != ContentDialogResult.Primary || dialog.Content is not ComboBox selector) {
@@ -66,17 +66,17 @@ public class ShellViewMenu
         }
     }
 
-    [Menu("Exit", "File", "Alt + F4", "fa-solid fa-right-from-bracket", IsSeparator = true)]
+    [Menu("退出", "文件", "Alt + F4", "fa-solid fa-right-from-bracket", IsSeparator = true)]
     public static void Exit()
     {
         ProfileManager.Shared.Apply();
         Environment.Exit(0);
     }
 
-    [Menu("Install File", "Mod", "Ctrl + I", "fa-solid fa-file-import")]
+    [Menu("安装文件", "模组", "Ctrl + I", "fa-solid fa-file-import")]
     public static async Task ImportModFile()
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFile, "Open Mod File", "TKCL:*.tkcl|All Archives:*.tkcl;*.zip;*.rar;*.7z|All Files:*.*");
+        BrowserDialog dialog = new(BrowserMode.OpenFile, "打开模组文件", "TKCL:*.tkcl|All Archives:*.tkcl;*.zip;*.rar;*.7z|All Files:*.*");
         string? selectedFile = await dialog.ShowDialog();
 
         if (string.IsNullOrEmpty(selectedFile)) {
@@ -86,10 +86,10 @@ public class ShellViewMenu
         await ModHelper.Import(selectedFile);
     }
 
-    [Menu("Install Folder", "Mod", "Ctrl + Shift + I", "fa-regular fa-folder-open")]
+    [Menu("安装文件夹", "模组", "Ctrl + Shift + I", "fa-regular fa-folder-open")]
     public static async Task ImportModFolder()
     {
-        BrowserDialog dialog = new(BrowserMode.OpenFolder, "Open Mod");
+        BrowserDialog dialog = new(BrowserMode.OpenFolder, "打开模组文件夹");
         string? selectedFolder = await dialog.ShowDialog();
 
         if (string.IsNullOrEmpty(selectedFolder)) {
@@ -99,16 +99,16 @@ public class ShellViewMenu
         await ModHelper.Import(selectedFolder);
     }
 
-    [Menu("Install from Argument", "Mod", "Ctrl + Alt + I", "fa-regular fa-keyboard")]
+    [Menu("从参数安装", "模组", "Ctrl + Alt + I", "fa-regular fa-keyboard")]
     public static async Task ImportArgument()
     {
         ContentDialog dialog = new() {
-            Title = "Import Argument",
+            Title = "导入参数",
             Content = new TextBox {
-                Watermark = "Argument (File, Folder, URL, Mod ID)"
+                Watermark = "参数 (文件, 文件夹, 链接, 模组ID)"
             },
-            PrimaryButtonText = "Import",
-            SecondaryButtonText = "Cancel",
+            PrimaryButtonText = "导入",
+            SecondaryButtonText = "取消",
         };
 
         if (await dialog.ShowAsync() != ContentDialogResult.Primary) {
@@ -120,13 +120,13 @@ public class ShellViewMenu
         }
     }
 
-    [Menu("Merge", "Mod", "Ctrl + M", "fa-solid fa-code-merge", IsSeparator = true)]
+    [Menu("合并", "模组", "Ctrl + M", "fa-solid fa-code-merge", IsSeparator = true)]
     public static async Task MergeMods()
     {
         await MergerOperations.Merge();
     }
 
-    [Menu("Show/Hide Console", "View", "Ctrl + F11", "fa-solid fa-terminal")]
+    [Menu("显示/隐藏 控制台", "视图", "Ctrl + F11", "fa-solid fa-terminal")]
     public static void ShowHideConsole()
     {
         if (OperatingSystem.IsWindows()) {
@@ -134,13 +134,13 @@ public class ShellViewMenu
             App.Focus();
         }
         else {
-            AppStatus.Set("This action is only supported on Win32 platforms", "fa-brands fa-windows",
+            AppStatus.Set("此操作仅在Win32平台上支持", "fa-brands fa-windows",
                 isWorkingStatus: false, temporaryStatusTime: 1.5);
         }
     }
 
 #if DEBUG
-    [Menu("Open Mod Folder", "Debug", "Alt + O", "fa-solid fa-folder-tree")]
+    [Menu("打开模组文件夹", "调试", "Alt + O", "fa-solid fa-folder-tree")]
     public static void OpenModFolder()
     {
         if (ProfileManager.Shared.Current.Selected?.Mod is not Mod target) {
@@ -153,34 +153,34 @@ public class ShellViewMenu
         }
         else {
             App.ToastError(new InvalidOperationException("""
-                This operations is only supported on Windows
+                该操作仅支持Windows操作系统
                 """));
         }
     }
 #endif
 
-    [Menu("Check for Update", "Help", "Ctrl + U", "fa-solid fa-cloud-arrow-up")]
+    [Menu("检查更新", "帮助", "Ctrl + U", "fa-solid fa-cloud-arrow-up")]
     public static async Task CheckForUpdate()
     {
         if (!await AppManager.HasUpdate()) {
             await new ContentDialog {
-                Title = "Check for Updates",
-                Content = "Software up to date.",
-                PrimaryButtonText = "OK"
+                Title = "检查更新",
+                Content = "最新的软件",
+                PrimaryButtonText = "确定"
             }.ShowAsync();
 
             return;
         }
 
         ContentDialog dialog = new() {
-            Title = "Update",
+            Title = "更新",
             Content = """
-                An update is availible.
+                存在可用更新。
                 
-                Would you like to close your current session and open the launcher?
+                是否要关闭当前会话并打开启动器？
                 """,
-            PrimaryButtonText = "Yes",
-            SecondaryButtonText = "Cancel"
+            PrimaryButtonText = "确定",
+            SecondaryButtonText = "取消"
         };
 
         if (await dialog.ShowAsync() == ContentDialogResult.Primary) {
@@ -193,34 +193,34 @@ public class ShellViewMenu
         }
     }
 
-    [Menu("Download Dependencies", "Help", "Ctrl + Shift + U", "fa-solid fa-screwdriver-wrench")]
+    [Menu("下载依赖", "帮助", "Ctrl + Shift + U", "fa-solid fa-screwdriver-wrench")]
     public static async Task DownloadDependencies()
     {
         await ToolHelper.DownloadDependencies(forceRefresh: true);
         await AssetHelper.Download();
     }
 
-    [Menu("Create Desktop Shortcuts", "Help", "Ctrl + Alt + L", "fa-solid fa-link")]
+    [Menu("创建桌面图标", "帮助", "Ctrl + Alt + L", "fa-solid fa-link")]
     public static Task CreateDesktopShortcuts()
     {
         AppManager.CreateDesktopShortcuts();
         return Task.CompletedTask;
     }
 
-    [Menu("About", "Help", "F12", "fa-solid fa-circle-info", IsSeparator = true)]
+    [Menu("关于", "帮助", "F12", "fa-solid fa-circle-info", IsSeparator = true)]
     public static async Task About()
     {
         string aboutFile = Path.Combine(Config.Shared.StaticStorageFolder, "Readme.md");
 
         TaskDialog dialog = new() {
             XamlRoot = App.XamlRoot,
-            Title = "About",
+            Title = "关于",
             Content = new MarkdownScrollViewer {
-                Markdown = File.Exists(aboutFile) ? File.ReadAllText(aboutFile) : "Invalid Installation"
+                Markdown = File.Exists(aboutFile) ? File.ReadAllText(aboutFile) : "无效的安装文件"
             },
             Buttons = [
                 new TaskDialogButton {
-                    Text = "OK"
+                    Text = "确定"
                 }
             ]
         };

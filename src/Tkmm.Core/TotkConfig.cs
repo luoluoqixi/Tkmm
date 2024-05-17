@@ -21,18 +21,19 @@ public partial class TotkConfig : ConfigModule<TotkConfig>
 
     [ObservableProperty]
     [property: ConfigFactory.Core.Attributes.Config(
-        Header = "Game Path",
+        Header = "游戏路径",
         Description = """
-            The absolute path to your TotK RomFS game dump
-            (e.g. F:\Games\Totk\RomFS)
+            你的王国之泪 RomFS 游戏转储的绝对路径
+            (例如: F:\Games\Totk\RomFS)
     
-            *Required for merging!
+            *合并需要!
             """,
-        Category = "TotK")]
+        Category = "TotK",
+        Group = "通用")]
     [property: ConfigFactory.Core.Attributes.BrowserConfig(
         BrowserMode = ConfigFactory.Core.Attributes.BrowserMode.OpenFolder,
         InstanceBrowserKey = "totk-config-game-path",
-        Title = "TotK RomFS Game Path")]
+        Title = "王国之泪 RomFS 游戏路径")]
     private string _gamePath = string.Empty;
     public static int GetVersion(string romfsFolder, int @default = 100)
     {
@@ -57,7 +58,7 @@ public partial class TotkConfig : ConfigModule<TotkConfig>
     {
         OnSaving += () => {
             if (Validate(out string? message, out ConfigProperty? target) == false) {
-                AppStatus.Set($"Invalid setting, {target.Property.Name} is invalid.",
+                AppStatus.Set($"无效设置, {target.Property.Name} 是无效的",
                     "fa-solid fa-triangle-exclamation", isWorkingStatus: false);
                 return false;
             }

@@ -97,36 +97,36 @@ public static class AppManager
 
     public static async Task Update()
     {
-        AppStatus.Set("Closing open app instances", "fa-solid fa-download");
+        AppStatus.Set("正在关闭打开的应用实例", "fa-solid fa-download");
         Kill();
 
-        AppStatus.Set("Downloading app", "fa-solid fa-download");
+        AppStatus.Set("正在下载应用", "fa-solid fa-download");
 
         (Stream stream, string tag) = await GitHubOperations
             .GetLatestRelease("TKMM-Team", "Tkmm", $"TKMM-{Dependency.GetOSName()}.zip");
 
-        AppStatus.Set("Extracting release", "fa-solid fa-file-zipper");
+        AppStatus.Set("正在提取释放", "fa-solid fa-file-zipper");
         using ZipArchive archive = new(stream);
         archive.ExtractToDirectory(_appFolder, true);
 
-        AppStatus.Set("Updating version", "fa-solid fa-code-commit");
+        AppStatus.Set("正在更新版本", "fa-solid fa-code-commit");
         File.WriteAllText(_appVersionFile, tag);
 
-        AppStatus.Set("Application installed!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
+        AppStatus.Set("应用程序安装完成!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
     }
 
     public static async Task UpdateLauncher()
     {
-        AppStatus.Set("Downloading launcher", "fa-solid fa-download");
+        AppStatus.Set("下载启动器", "fa-solid fa-download");
 
         (Stream stream, _) = await GitHubOperations
             .GetLatestRelease("TKMM-Team", "Tkmm", $"TKMM-Launcher-{Dependency.GetOSName()}.zip");
 
-        AppStatus.Set("Extracting release", "fa-solid fa-file-zipper");
+        AppStatus.Set("正在提取释放", "fa-solid fa-file-zipper");
         using ZipArchive archive = new(stream);
         archive.ExtractToDirectory(_launcherFolder, true);
 
-        AppStatus.Set("Launcher updated!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
+        AppStatus.Set("启动器更新完成!", "fa-solid fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
     }
 
     public static void Uninstall()

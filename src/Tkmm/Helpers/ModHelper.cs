@@ -25,18 +25,18 @@ public static class ModHelper
     public static async Task<Mod?> Import(string arg)
     {
         try {
-            AppStatus.Set($"Installing '{arg}'", "fa-solid fa-download", isWorkingStatus: true);
+            AppStatus.Set($"正在安装 '{arg}'", "fa-solid fa-download", isWorkingStatus: true);
 
             Mod result = await Task.Run(async
                 () => await ImportAsync(arg)
             );
 
-            AppStatus.Set("Install Complete!", "fa-regular fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
+            AppStatus.Set("安装完成!", "fa-regular fa-circle-check", isWorkingStatus: false, temporaryStatusTime: 1.5);
             return result;
         }
         catch (Exception ex) {
             App.ToastError(ex);
-            AppStatus.Set("Install Failed!", "fa-regular fa-circle-xmark", isWorkingStatus: false, temporaryStatusTime: 1.5);
+            AppStatus.Set("安装失败!", "fa-regular fa-circle-xmark", isWorkingStatus: false, temporaryStatusTime: 1.5);
         }
 
         return null;

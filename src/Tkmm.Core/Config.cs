@@ -26,24 +26,24 @@ public partial class Config : ConfigModule<Config>
 
     [ObservableProperty]
     [property: Config(
-        Header = "Theme",
+        Header = "主题",
         Description = "",
-        Group = "Application")]
+        Group = "应用程序")]
     [property: DropdownConfig("Dark", "Light")]
     private string _theme = "Dark";
 
     [ObservableProperty]
     [property: Config(
-        Header = "Show Console",
-        Description = "Show the console window for additional information (restart required)",
-        Group = "Application")]
+        Header = "显示控制台",
+        Description = "显示控制台窗口以获取其他信息 (需要重新启动)",
+        Group = "应用程序")]
     private bool _showConsole = false;
 
     [ObservableProperty]
     [property: Config(
-        Header = "System Folder",
-        Description = "The folder used to store TKMM system files.",
-        Group = "Application")]
+        Header = "系统文件夹",
+        Description = "用于存储TKMM系统文件的文件夹。",
+        Group = "应用程序")]
     [property: BrowserConfig(
         BrowserMode = BrowserMode.OpenFolder,
         InstanceBrowserKey = "config-storage-folder",
@@ -52,42 +52,42 @@ public partial class Config : ConfigModule<Config>
 
     [ObservableProperty]
     [property: Config(
-        Header = "Default Author",
-        Description = "The default author used when packaging TKCL mods.",
-        Group = "Packaging")]
+        Header = "默认的作者",
+        Description = "封装TKCL模组时使用的默认作者。",
+        Group = "打包")]
     private string _defaultAuthor = Path.GetFileName(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile));
 
     [ObservableProperty]
     [property: Config(
-        Header = "Merged Mod Output Folder",
-        Description = "The output folder to write the final merged mod to.",
-        Group = "Merging")]
+        Header = "合并完成模组的输出文件夹",
+        Description = "将最终合并模组写入的输出文件夹。",
+        Group = "合并")]
     [property: BrowserConfig(
         BrowserMode = BrowserMode.OpenFolder,
         InstanceBrowserKey = "config-mrged-output-folder",
-        Title = "Merged Mod Output Folder")]
+        Title = "合并完成模组的输出文件夹")]
     private string _mergeOutput = _defaultMergedPath;
 
     [ObservableProperty]
     [property: Config(
-        Header = "Target Language",
-        Description = "The target language that MalsMerger should create an archive for.",
-        Group = "Merging")]
+        Header = "目标语言",
+        Description = "使用 MalsMerger 创建存档的目标语言",
+        Group = "合并")]
     [property: DropdownConfig("USen", "EUen", "JPja", "EUfr", "USfr", "USes", "EUes", "EUde", "EUnl", "EUit", "KRko", "CNzh", "TWzh")]
     private string _gameLanguage = "USen";
 
     [ObservableProperty]
     [property: Config(
-        Header = "Use Ryujinx",
-        Description = "Automatically export to your Ryujinx mod folder.",
-        Group = "Merging")]
+        Header = "使用Ryujinx",
+        Description = "自动导出到你的 Ryujinx 模组文件夹",
+        Group = "合并")]
     private bool _useRyujinx = false;
 
     [ObservableProperty]
     [property: Config(
-        Header = "Use Japanese Citrus Fruit",
-        Description = "Automatically export to your Japanese Citrus Fruit mod folder.",
-        Group = "Merging")]
+        Header = "使用Japanese Citrus Fruit",
+        Description = "自动导出到你的 Japanese Citrus Fruit 模组文件夹",
+        Group = "合并")]
     private bool _useJapaneseCitrusFruit = false;
 
     partial void OnThemeChanged(string value)

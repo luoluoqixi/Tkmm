@@ -15,5 +15,11 @@ public partial class AboutPageView : UserControl
     public static async void FetchSync()
     {
         await WikiSourceManager.Shared.Fetch();
+        WikiSourceManager.Shared.Items.Insert(0, new Core.Models.WikiItem
+        {
+            Title = "บบปฏ",
+            Name = "ChineseInfo",
+            Description = "luoluoqixi https://github.com/luoluoqixi/TKMM/",
+        });
     }
 }
